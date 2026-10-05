@@ -1,37 +1,15 @@
-import { useState } from "react"
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from "./pages/home"
+import Login from "./pages/login"
 
 function App() {
-
-  const [message, setMessage] = useState("")
-  const [messages, setMessages] = useState([])
-
-  const handleSubmit = () => {
-    setMessages([...messages, message])
-    setMessage("")
-  }
-
   return (
-    <>
-      <h1>QueOnda</h1>
-      <section>
-        <h2>Contactos</h2>
-        <p>Contacto user</p>
-        <p>Contacto user2</p>
-        <p>Contacto user3</p>
-      </section>
-      <section>
-        <h2>Chat con "user"</h2>
-        <p>Mensaje de user</p>
-        {
-          messages.map((msg) => (
-            <p>{msg}</p>
-          ))
-        }
-        <input value={message} type="text" placeholder="Escribir mensaje..." onChange={(e) => setMessage(e.target.value)}/>
-        <button onClick={handleSubmit}>Enviar</button>
-      </section>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={ <Home /> }></Route>
+        <Route path='/login' element={ <Login /> }></Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
