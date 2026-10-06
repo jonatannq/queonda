@@ -7,7 +7,7 @@ function Home(){
             <h1>QueOnda</h1>
             {/**/}
             {/*
-            <Contact />*/}
+            <Contact /> */}
             <Chat />
         </main>
     )

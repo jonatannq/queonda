@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Login(){
  
@@ -9,6 +10,15 @@ function Login(){
         username: "",
         password: ""
     })
+  
+    const getUser = async () => {
+        const response = await axios.get("http://localhost:3000/")
+        console.log(response.data)
+    }
+
+    useEffect(() =>  {
+        getUser()
+    },[])
 
     const handleChange = (e) => {
         setForm({
@@ -18,11 +28,10 @@ function Login(){
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log()
         if(form.username === "jonatan")
             navigate("/")
         else {
-            return console.log("No puedes entrar")
+            return  console.log("No puedes entrar ", form)
         }
     }
 
@@ -43,7 +52,7 @@ function Login(){
                     placeholder="password"
                     onChange={handleChange}
                 />
-                <button type="submit">
+                <button>
                     Iniciar Sesion
                 </button>
             </form>
