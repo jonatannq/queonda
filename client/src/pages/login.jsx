@@ -1,24 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { userStore } from '../store/userStore'
 
 function Login(){
  
+    const {user, setUser } = userStore()
     const navigate = useNavigate()
+    const [err, setErr] = useState("")
+    const [userR, setUserR] = useState({})
 
     const [form, setForm] = useState({
         username: "",
         password: ""
     })
-  
-    const getUser = async () => {
-        const response = await axios.get("http://localhost:3000/")
-        console.log(response.data)
-    }
-
-    useEffect(() =>  {
-        getUser()
-    },[])
 
     const handleChange = (e) => {
         setForm({
@@ -26,19 +21,32 @@ function Login(){
         })
     }  
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if(form.username === "jonatan")
-            navigate("/")
-        else {
-            return  console.log("No puedes entrar ", form)
+        //console.log(form.password, form.username)
+        const response = await axios.post("http://localhost:3000/", form)
+        setUser(response.data)
+
+        if(!user){
+            return
         }
+         
+        navigate("/")
+
+        //setErr(response.data.mensaje)
+        
+       
+        /*if(form.username === "jonatan")
+            
+        else {
+            return
+        }*/
     }
 
     return(
         <main>
             <h1>Inicia sesion</h1>
-
+            {err && <p>{err}</p>}
             <form onSubmit={handleSubmit}>
                 <input
                     name='username' 
