@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 
 app.post("/",  (req, res) => {
-    const {username, password} = req.body
+    const { username, password } = req.body
     
     const query = users.find((user) =>
         username === user.username)

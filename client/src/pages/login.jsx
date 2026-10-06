@@ -5,10 +5,10 @@ import { userStore } from '../store/userStore'
 
 function Login(){
  
-    const {user, setUser } = userStore()
+    const { setUser } = userStore()
     const navigate = useNavigate()
     const [err, setErr] = useState("")
-    const [userR, setUserR] = useState({})
+
 
     const [form, setForm] = useState({
         username: "",
@@ -23,24 +23,14 @@ function Login(){
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        //console.log(form.password, form.username)
-        const response = await axios.post("http://localhost:3000/", form)
-        setUser(response.data)
-
-        if(!user){
-            return
-        }
-         
-        navigate("/")
-
-        //setErr(response.data.mensaje)
         
-       
-        /*if(form.username === "jonatan")
-            
-        else {
-            return
-        }*/
+        try {
+            const response = await axios.post("http://localhost:3000/", form)
+            setUser(response.data)
+            navigate("/")
+        } catch (e) {
+            return setErr(e.response.data.mensaje)
+        }             
     }
 
     return(
