@@ -9,43 +9,32 @@ app.use(cors())
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "alon26&",
     database: "chat"
 })
 
-const users = [
-    {
-        id: 1,
-        username: "jonatan",
-        password: "jonatan1"
-    },
-    {
-        id: 2,
-        username: "alon",
-        password: "alon1"
-    }
-]
 
-app.get("/", (req, res) => {
-    res.json(users)
-})
-
-
-app.post("/",  (req, res) => {
+app.post("/", (req, res) => {
     const { username, password } = req.body
     
-    const query = users.find((user) =>
-        username === user.username)
-    
-    if(!query  || password !== query.password){
-        return res.status(401).json({
-            mensaje: "Usuario o contraseña incorrectos"
+    db.query("SELECT * FROM users WHERE name = ? AND password = ?",
+        [username, password], (err, result) => {
+        if(err){
+            console.log("Error")
+            return res.status(400).json({mensaje: "error"})
+        }
+        
+        if(result.length === 0){
+            return res.status(401).json({
+                mensaje: "Usuario o contraseña incorrectos"
+            })
+        }
+        const user = result[0]
+        res.json({
+            id: user.id,
+            username: user.name
         })
-    }
 
-    res.json({
-        id: query.id,
-        username: query.username,
     })
 
 })

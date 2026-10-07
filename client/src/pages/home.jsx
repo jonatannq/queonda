@@ -7,6 +7,7 @@ function Home(){
 
     const { user } = userStore()
     const navigate = useNavigate()
+    
     useEffect(()=>{
         if(!user){
             navigate("/login")
