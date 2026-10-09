@@ -9,22 +9,11 @@ app.use(cors())
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "alon26&",
     database: "chat"
 })
 
-const users = [
-    {
-        id: 1,
-        username: "jonatan",
-        password: "jonatan1"
-    },
-    {
-        id: 2,
-        username: "alon",
-        password: "alon1"
-    }
-]
+
 
 app.get("/", (req, res) => {
     res.json(users)
@@ -53,12 +42,20 @@ app.post("/",  (req, res) => {
 
 app.post("/signup",  (req, res) => {
     const { name, last, data, password } = req.body
-    console.log(name, last, data, password)
-     db.query("INSERT INTO users(name, last, data, password) VALUES (?,?,?,?)",
+    if(!name || !last || !data || !password){
+        return res.status(401).json({
+            err: "Todos los campos son requeridos"
+        })
+    }
+
+
+    db.query("INSERT INTO users(name, last, data, password) VALUES (?,?,?,?)",
         [name, last, data, password], (err, result) => {
             
             if(err){
-                return res.status(401).json({err: "No se puedo crear la cuenta"})
+                return res.status(401).json({
+                    err: "No se puedo crear la cuenta"
+                })
             }
             res.json({
                 message: "Usuario creado con exito"

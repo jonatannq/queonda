@@ -5,7 +5,7 @@ import axios from 'axios'
 function Signup(){
 
     const navigate = useNavigate()
-
+    const [err, setErr] = useState("")
     const [form, setForm ] = useState({
         name: "",
         last: "",
@@ -20,7 +20,7 @@ function Signup(){
             const response = await axios.post("http://localhost:3000/signup", form)
             navigate("/login")
         } catch (err) {
-            
+            setErr(err.response.data.err)
         }
     }
 
@@ -38,6 +38,7 @@ function Signup(){
     return(
         <main>
             <h1>Crea una cuenta en Queonda</h1>
+            {err && <p>{err}</p>}
             <form onSubmit={handleSign}>
                 <input
                     name='name'
