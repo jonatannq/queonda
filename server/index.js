@@ -58,7 +58,7 @@ app.post("/signup",  (req, res) => {
                 })
             }
             res.json({
-                message: "Usuario creado con exito"
+                message: "Usuario creado"
             })
         })
 })

@@ -15,12 +15,21 @@ function Signup(){
 
     const handleSign = async (e) => {
         e.preventDefault()
+        if(!form.name || !form.last || !form.data || !form.password){
+            return setErr("Todos los campos son requeridos")
+        }
         
         try {
             const response = await axios.post("http://localhost:3000/signup", form)
             navigate("/login")
-        } catch (err) {
-            setErr(err.response.data.err)
+        } catch (e) {
+            if(e.response){
+                return setErr(e.response.data.err)
+            }
+            if(e.request){
+                return setErr("Hubo un problema al crear tu cuenta")
+            }
+            
         }
     }
 
