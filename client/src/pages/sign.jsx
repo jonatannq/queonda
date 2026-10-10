@@ -11,32 +11,15 @@ function Sign(){
     const navigate = useNavigate()
 
     const inputs = [
-        {
-            name: "name",
-            type: "text",
-            place: "Nombre"
-        },
-        {
-            name: "last",
-            type: "text",
-            place: "Apellido"
-        },
-        {
-            name: "contact",
-            type: "text",
-            place: "Numero o correo electronico",
-        },
-        {
-            name: "pass",
-            type: "password",
-            place: "Contraseña",
-        }
+        { name: "name", type: "text", place: "Nombre" },
+        { name: "last", type: "text", place: "Apellido" },
+        { name: "contact", type: "text", place: "Numero o correo electronico", },
+        { name: "pass", type: "password", place: "Contraseña" }
     ]
 
     return(
         <main>
             <h1>Crea una cuenta en QueOnda</h1>
-            
             <Form
                 inputs={inputs} 
                 textbtn={"Enviar"} 

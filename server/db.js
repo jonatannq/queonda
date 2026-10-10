@@ -1,18 +1,11 @@
 
-const express = require("express")
-const app = express()
+const mysql = require("mysql2")
 
-const users = [
-    {
-        name: "JUAN"
-    },
-    {
-        name: "Alondra"
-    }
-]
-
-app.get("/", (req, res) => {
-    res.send(users)
+const connect = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "alon26&",
+    database: "chat"
 })
 
-app.listen(3000, ()=> console.log("Escuchando en el puerto 3000"))
+module.exports =  connect
