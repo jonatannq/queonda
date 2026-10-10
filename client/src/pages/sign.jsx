@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import api from '../services/api'
 import Form from '../components/form'
 import axios from 'axios'
 
@@ -20,7 +21,7 @@ function Sign(){
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/", form)
+            const response = await api.post("/", form)
             console.log(response.data.mensaje)
             //navigate("/login")
         } catch (e) {

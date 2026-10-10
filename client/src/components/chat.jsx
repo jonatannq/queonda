@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from 'axios'
+import api from '../services/api'
 
 function Chat(){
 
@@ -7,15 +8,13 @@ function Chat(){
     const [messages, setMessages] = useState([])
 
     const get = async () => {
-        const response = await axios.get("http://localhost:3000/chat")
+        const response = await api.get("/chat")
         setMessages(response.data.messages)
     }
 
     useEffect(() => {
         get()
     }, [])
-
-    
 
 
     const enviar = async () => {
@@ -24,7 +23,7 @@ function Chat(){
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/chat", {
+            const response = await api.post("/chat", {
                 message: message
             })
 

@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
+import api from '../services/api'
 import Form from '../components/form'
 import axios from 'axios'
 
@@ -8,7 +9,7 @@ function Auth(){
 
     const handleSubmit = async (form) => {
         try {
-            const response = await axios.post("http://localhost:3000/login", form) 
+            const response = await api.post("/login", form) 
             console.log(response.data.user)//set user
             navigate("/")
         } catch (e) {
