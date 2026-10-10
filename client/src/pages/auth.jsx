@@ -1,11 +1,19 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Form from '../components/form'
+import axios from 'axios'
 
 function Auth(){
 
-    const handleSubmit = (e) => {
-        console.log(e)
+    const  navigate = useNavigate()
+
+    const handleSubmit = async (form) => {
+        try {
+            const response = await axios.post("http://localhost:3000/login", form) 
+            console.log(response.data.user)//set user
+            navigate("/")
+        } catch (e) {
+            console.log(e.response.data.err)
+        }
     }
 
     const inputs = [

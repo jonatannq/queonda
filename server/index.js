@@ -1,4 +1,3 @@
-
 const express = require("express")
 const cors = require("cors")
 const db = require("./db.js")
@@ -7,6 +6,32 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+
+app.post("/login", (req, res) => {
+    const {user, pass} = req.body
+    db.query("SELECT id, name FROM users WHERE name = ? AND password = ?", [user, pass], (err, result) => {
+        if(err){
+            return res.status(401).json({
+                err: "Hubo un error en el servidor 1002"
+            })
+        }
+
+        if(result.length === 0){
+            return res.status(401).json({
+                err: "Usuario o contraseña incorrectos"
+            })
+        }
+
+
+        const user = result[0]
+
+        res.json({
+            user
+        })
+
+    })
+
+})
 
 app.post("/", (req, res) => {
     const { name, last, contact, pass } = req.body
@@ -20,7 +45,7 @@ app.post("/", (req, res) => {
     db.query("INSERT INTO users(name, last, data, password) VALUES(?, ?, ?, ?)", [name, last, contact, pass], (err, result) => {
         if(err){
             return res.status(400).json({
-                err: "Hubo un error en el servidor"
+                err: "Hubo un error en el servidor 1001"
             })
         }
 
