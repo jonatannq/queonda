@@ -1,12 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import Form from '../components/form'
-import { useState } from 'react'
+import axios from 'axios'
 
 function Sign(){
-
-    const handleSubmit = (e) => {
-        console.log(e)
-    }
 
     const navigate = useNavigate()
 
@@ -16,6 +12,26 @@ function Sign(){
         { name: "contact", type: "text", place: "Numero o correo electronico", },
         { name: "pass", type: "password", place: "Contraseña" }
     ]
+
+    const handleSubmit = async (form) => {
+
+        if(!form.name || !form.last || !form.contact || !form.pass){
+            return console.log("Todos los campos son requeridos")
+        }
+
+        try {
+            const response = await axios.post("http://localhost:3000/", form)
+            console.log(response.data.mensaje)
+            //navigate("/login")
+        } catch (e) {
+            if(e.response){
+                return console.log(e.response.data.err)
+            }else if(e.request){
+                return console.log("Hubo un error en el servidor, intenta mas tarde")
+            }
+        }
+    }
+
 
     return(
         <main>
