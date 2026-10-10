@@ -7,6 +7,33 @@ app.use(cors())
 app.use(express.json())
 
 
+app.post("/chat", (req, res) => {
+    const {message} = req.body
+    db.query("INSERT INTO msg(msg) VALUES(?)", [message], (err, result) => {
+        if(err){
+            return console.log("Hubo un error")
+        }
+        return res.json({
+            msg: "Enviado"
+        })
+    })
+})
+
+app.get("/chat", (req, res) => {
+    db.query("SELECT * FROM msg", (err, result) => {
+        if(err){
+            return res.json({msg: "Hubo un error "})
+        }
+
+        return res.json({
+            messages: result
+        })
+        
+    })
+})
+
+
+
 app.post("/login", (req, res) => {
     const {user, pass} = req.body
     db.query("SELECT id, name FROM users WHERE name = ? AND password = ?", [user, pass], (err, result) => {
