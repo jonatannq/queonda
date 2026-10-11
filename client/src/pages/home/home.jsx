@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Chat from '../components/chat'
+import Chat from '../../components/chat/chat'
 
 function Home(){
 
@@ -16,7 +16,7 @@ function Home(){
 
     return(
         <main>
-            <h1>Que onda</h1>
+            {/*<h1>Que onda</h1>*/}
             
             <Chat />
         </main>

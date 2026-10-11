@@ -1,0 +1,58 @@
+.containerchat {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: 100vh;
+    width: min(90rem, 80%);
+    padding: 2rem;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+
+.message {
+    background-color: rgb(134, 212, 124);
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 1.5rem;
+    width: fit-content; /* <-- Esto hace que solo ocupe el espacio de su texto */
+    max-width: 60%;
+    overflow-wrap: anywhere;
+}
+
+.containerinput {
+    background-color: rgb(74, 74, 74);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: space-between;
+    input{
+        border: none;
+        background-color: rgb(74, 74, 74);
+        width: 94%;
+        height: auto;
+        outline: none;
+        color:white;
+        &::placeholder {
+            color:white;
+        }
+    }
+}
+
+.btnsend {
+    background-color: rgb(137, 164, 149);
+    border: none;
+    cursor: pointer;
+    border-radius: 2rem;
+    padding: 0.2rem;
+}
+
+.icon{
+    fill: rgb(237, 130, 130);
+}

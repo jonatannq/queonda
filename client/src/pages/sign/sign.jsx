@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import api from '../services/api'
-import Form from '../components/form'
-import axios from 'axios'
+import api from '../../services/api'
+import Form from '../../components/form/form'
+
 
 function Sign(){
 

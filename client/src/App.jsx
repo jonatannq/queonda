@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Home from './pages/home'
-import Auth from './pages/auth'
-import Sign from './pages/sign'
+import Home from './pages/home/home'
+import Auth from './pages/auth/auth'
+import Sign from './pages/sign/sign'
 
 function App() {
   return (
