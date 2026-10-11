@@ -62,6 +62,15 @@ app.post("/login", (req, res) => {
 
 })
 
+app.delete("/chat", (req, res) => {
+    db.query("DELETE FROM msg", (err, resultado) => {
+        if(err){
+            return console.log("No se pudo borrar")
+        }
+        return res.json({msg: "se pudo borrar"})
+    })
+})
+
 app.post("/", (req, res) => {
     const { name, last, contact, pass } = req.body
 
