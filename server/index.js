@@ -10,8 +10,8 @@ require('dotenv').config()
 const PORT = process.env.PORT || 3000;
 
 app.post("/chat", (req, res) => {
-    const {message} = req.body
-    db.query("INSERT INTO msg(msg) VALUES(?)", [message], (err, result) => {
+    const {id, message} = req.body
+    db.query("INSERT INTO msg(sender_id, msg) VALUES(?, ?)", [id, message], (err, result) => {
         if(err){
             return console.log("Hubo un error")
         }
@@ -38,6 +38,11 @@ app.get("/chat", (req, res) => {
 
 app.post("/login", (req, res) => {
     const {user, pass} = req.body
+    if(!user || !pass){
+        return res.status(401).json({
+            err: "Todos los campos son necesarios"
+        })
+    }
     db.query("SELECT id, name FROM users WHERE name = ? AND password = ?", [user, pass], (err, result) => {
         if(err){
             return res.status(401).json({
@@ -51,7 +56,6 @@ app.post("/login", (req, res) => {
             })
         }
 
-
         const user = result[0]
 
         res.json({
@@ -59,8 +63,8 @@ app.post("/login", (req, res) => {
         })
 
     })
-
 })
+
 
 app.delete("/chat", (req, res) => {
     db.query("DELETE FROM msg", (err, resultado) => {

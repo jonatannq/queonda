@@ -1,33 +1,34 @@
 import { Link, useNavigate } from 'react-router-dom'
-import api from '../../services/api'
-import Form from '../../components/form/form'
 import { useState } from 'react'
+import api from '../../services/api'
 import styles from './auth.module.scss'
+import { userStore } from '../../../store/userStore'
 
 
 function Auth(){
 
     const  navigate = useNavigate()
     const [err, setErr] = useState("")
+    const[form, setForm] = useState({ })
+    const { setUser } = userStore()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!form.user || !form.pass){
+        if(!form.user || !form.pass)
             return setErr("Todos los campos son necesarios")
-        }
+
         try {
             const response = await api.post("/login", form) 
-            console.log(response.data.user)//set user
+            setUser(response.data.user)
             navigate("/")
         } catch (e) {
             return setErr(e.response.data.err)
         }
     }
-
-    const[form, setForm] = useState({ })
     
     const handleChange = (e) => {
         setForm({
-             ...form, [e.target.name]: e.target.value
+            ...form, [e.target.name]: e.target.value
         })
     }
     

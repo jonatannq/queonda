@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from "react"
 import api from '../../services/api'
 import styles from './chat.module.scss'
-import {LucideSendHorizontal, Send, SendHorizonalIcon, SendIcon, SendToBackIcon} from 'lucide-react'
+import { SendHorizonalIcon } from 'lucide-react'
+import { userStore } from "../../../store/userStore"
 
 function Chat(){
 
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
+    const { user } = userStore()
 
     const divRef = useRef(null)
 
@@ -29,10 +31,11 @@ function Chat(){
 
         try {
             const response = await api.post("/chat", {
+                id: user.id,
                 message: message
             })
         } catch (e) { return console.log(e)  }
-        
+
         setMessage("")
     }
 
@@ -54,10 +57,10 @@ function Chat(){
             
             <div className={styles.container}>
                 
-                {messages.map((msg) => (
-            
-                    <p key={msg.id} className={styles.message}>{msg.msg}</p>
-                                    
+                {messages.map((msg) => ( 
+                    <p key={msg.id} className={`${styles.message} ${user.id !== msg.sender_id && styles.other }`}>
+                        {msg.msg}
+                    </p>
                 ))}
                 <div ref={divRef}/>
             </div>  
@@ -67,7 +70,6 @@ function Chat(){
                 <button className={styles.btnsend} onClick={enviar}>
                     <SendHorizonalIcon  className={styles.icon}/>
                 </button>
-                
             </div>
         </section>
     )

@@ -10,6 +10,7 @@ function Sign(){
     const navigate = useNavigate()
     const[form, setForm] = useState({ })
     const [err, setErr] = useState("")
+
     const handleChange = (e) => {
         setForm({
             ...form, [e.target.name]: e.target.value
@@ -18,10 +19,9 @@ function Sign(){
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!form.name || !form.last || !form.contact || !form.pass){
+        if(!form.name || !form.last || !form.contact || !form.pass)
             return setErr("Todos los campos son requeridos")
-        }
-
+        
         try {
             const response = await api.post("/", form)
             console.log(response.data.mensaje)
@@ -68,9 +68,7 @@ function Sign(){
                     <button className={styles.btn} type='button' onClick={() => navigate("/auth")}>Ya tengo cuenta</button>
                 </fieldset>
                 
-            </form>
-
-            
+            </form>      
         </main>
     )
 }

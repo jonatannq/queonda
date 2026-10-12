@@ -1,23 +1,24 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Chat from '../../components/chat/chat'
+import { userStore } from '../../../store/userStore'
+
 
 function Home(){
 
     const navigate = useNavigate()
-    const user = ""
+    const { user } = userStore()
+
 
     useEffect(()=> {
         if(!user){
-            //nave
+            navigate("/auth")
         }
-
+        
     },[])
 
     return(
         <main>
-            {/*<h1>Que onda</h1>*/}
-            
             <Chat />
         </main>
     )
