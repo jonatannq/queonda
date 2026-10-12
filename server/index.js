@@ -10,10 +10,11 @@ require('dotenv').config()
 const PORT = process.env.PORT || 3000;
 
 app.post("/chat", (req, res) => {
-    const {id, message} = req.body
-    db.query("INSERT INTO msg(sender_id, msg) VALUES(?, ?)", [id, message], (err, result) => {
+    const {id, message , time} = req.body
+
+    db.query("INSERT INTO msg(sender_id, msg, send_at) VALUES(?, ?, ?)", [id, message, time], (err, result) => {
         if(err){
-            return console.log("Hubo un error")
+            return console.log("Hubo un errors")
         }
         return res.json({
             msg: "Enviado"

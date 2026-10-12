@@ -18,21 +18,36 @@ function Chat(){
     }
 
     useEffect(() => {
-        divRef.current?.scrollIntoView({behavior: 'auto'})
-    }, [messages])
-
-    useEffect(() => {
         get()
     }, [])
 
 
+    useEffect(() => {
+        divRef.current?.scrollIntoView({behavior: 'auto'})
+    }, [messages])
+
+
+    
+    const getHour = () => {
+        const time = new Date().toLocaleTimeString("es-MX", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        })
+        return time
+    }
+    
+
     const enviar = async () => {
-        if(!message) return console.log("Los mensajes no pueden ir vacios")
+        if(!message) return 
+
+        const time = getHour()
 
         try {
             const response = await api.post("/chat", {
                 id: user.id,
-                message: message
+                message: message,
+                time: time
             })
         } catch (e) { return console.log(e)  }
 
@@ -58,9 +73,13 @@ function Chat(){
             <div className={styles.container}>
                 
                 {messages.map((msg) => ( 
-                    <p key={msg.id} className={`${styles.message} ${user.id !== msg.sender_id && styles.other }`}>
-                        {msg.msg}
-                    </p>
+                    <>
+                        <p key={msg.id} className={`${styles.message} ${user.id !== msg.sender_id && styles.other }`}>
+                            {msg.msg}
+                        </p>
+                        <span  className={`${styles.message} ${user.id !== msg.sender_id && styles.other }`}>{msg.send_at}</span>
+                    
+                    </>
                 ))}
                 <div ref={divRef}/>
             </div>  

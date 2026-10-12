@@ -1,15 +1,23 @@
 import { useNavigate } from 'react-router-dom'
 import api from '../../services/api'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './sign.module.scss'
 import {BackpackIcon, ChevronDown, ChevronLeft} from 'lucide-react'
+import { userStore } from '../../../store/userStore'
 
 
 function Sign(){
 
+    const {user} = userStore()
     const navigate = useNavigate()
     const[form, setForm] = useState({ })
     const [err, setErr] = useState("")
+
+    useEffect(() => {
+        if(user){
+            navigate("/")
+        }
+    }, [])
 
     const handleChange = (e) => {
         setForm({
