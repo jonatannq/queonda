@@ -1,12 +1,13 @@
 .containerchat {
     display: grid;
+    background-color: rgb(83, 83, 83);
     /*background-image: url("/back.jpg");
     background-position: center;
     background-repeat: no-repeat;*/
     background-size: cover;
     grid-template-rows: auto 1fr auto;
     height: 100vh;
-    width: min(90rem, 80%);
+    width: 100%;
     margin: 0 auto;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
 }
@@ -19,11 +20,45 @@
 }
 
 .container {
-  height: 100%;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
+
+.div{
+    background-color: rgb(109, 109, 109);
+    padding: 0.2rem;
+    border-radius: 1rem;
+    position: absolute;
+    right: 3rem;
+    top: 4rem;
+   
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    width: 9rem;
+    z-index: 10;
+}
+
+.btndiv{
+    background-color: transparent;
+    width: 96%;
+    align-self: center;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+    border: none;
+    border-radius: 2rem;
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(147, 30, 30);
+        color: rgba(226, 50, 50, 0.975);
+    }
+}
+
 
 .container > *:first-child {
   margin-top: auto;
@@ -31,33 +66,17 @@
 
 
 .container::-webkit-scrollbar {
-    width: 0.2rem;
+    width: 0.3rem;
 }
 
 .container::-webkit-scrollbar-thumb {
-    background: rgb(86, 86, 86);
+    background: rgba(212, 212, 212, 0.8);
     min-height: 1rem;
     border-radius: 2rem;
 }
 
 .container::-webkit-scrollbar-track {
     background: none;
-}
-
-.message {
-    background-color: rgb(134, 212, 124);
-    padding: 0.5rem 1rem;
-    margin: 1rem;
-    border-radius: 1.5rem;
-    width: fit-content;
-    max-width: 60%;
-    overflow-wrap: anywhere;
-    align-self: end;
-}
-
-.other {
-    background-color: rgb(91, 110, 88);
-    align-self: start;
 }
 
 
@@ -85,7 +104,7 @@
 .btnsend {
     background-color: rgb(137, 164, 149);
     border: none;
-    
+
     border-radius: 2rem;
     padding: 0.2rem;
     .icon{
@@ -100,3 +119,13 @@
     }
 }
 
+.more {
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    padding: 0.3rem;
+    &:hover{
+        background-color: rgb(137, 133, 133);
+        cursor: pointer;
+    }
+}

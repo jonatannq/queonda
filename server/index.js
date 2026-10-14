@@ -23,15 +23,13 @@ app.post("/chat", (req, res) => {
 })
 
 app.get("/chat", (req, res) => {
-    db.query("SELECT * FROM msg", (err, result) => {
+    db.query("SELECT * FROM msg ORDER BY Send_at asc", (err, result) => {
         if(err){
             return res.json({msg: "Hubo un error "})
         }
-
         return res.json({
             messages: result
-        })
-        
+        })     
     })
 })
 
@@ -62,7 +60,6 @@ app.post("/login", (req, res) => {
         res.json({
             user
         })
-
     })
 })
 
@@ -91,13 +88,10 @@ app.post("/", (req, res) => {
                 err: "Hubo un error en el servidor 1001"
             })
         }
-
         res.status(200).json({
             mensaje: "Usuario creado"
         })
     })
-
-    
 })
 
 

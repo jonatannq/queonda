@@ -1,17 +1,17 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import api from '../../services/api'
 import styles from './chat.module.scss'
-import { SendHorizonalIcon } from 'lucide-react'
+import {  CircleMinus, MoreVertical, SendHorizonalIcon } from 'lucide-react'
 import { userStore } from "../../../store/userStore"
+import ChatList from "./chatlist"
 
 function Chat(){
 
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
     const { user } = userStore()
-
-    const divRef = useRef(null)
-
+    const [show, setShow] = useState(false)
+    const [modal, setModal] = useState(false)
     const get = async () => {
         const response = await api.get("/chat")
         setMessages(response.data.messages)
@@ -21,13 +21,6 @@ function Chat(){
         get()
     }, [])
 
-
-    useEffect(() => {
-        divRef.current?.scrollIntoView({behavior: 'auto'})
-    }, [messages])
-
-
-    
     const getHour = () => {
         const time = new Date().toLocaleTimeString("es-MX", {
             hour: "2-digit",
@@ -38,7 +31,9 @@ function Chat(){
     }
     
 
-    const enviar = async () => {
+    const enviar = async (e) => {
+        e.preventDefault()
+    
         if(!message) return 
 
         const time = getHour()
@@ -54,7 +49,12 @@ function Chat(){
         setMessage("")
     }
 
+    const more = async () =>  {
+        setShow(!show)
+    }
+
     const vaciar = async () =>  {
+        more()
         try {
             const response = await api.delete("/chat")
         } catch (error) {
@@ -67,29 +67,28 @@ function Chat(){
         <section className={styles.containerchat}>
             <div className={styles.header}>
                 <h2>Chat</h2>
-                <button onClick={vaciar}>Vaciar chat</button>
-            </div>
-            
-            <div className={styles.container}>
+                <button className={styles.more} onClick={more}>
+                    <MoreVertical />
+                </button>
                 
-                {messages.map((msg) => ( 
-                    <>
-                        <p key={msg.id} className={`${styles.message} ${user.id !== msg.sender_id && styles.other }`}>
-                            {msg.msg}
-                        </p>
-                        <span  className={`${styles.message} ${user.id !== msg.sender_id && styles.other }`}>{msg.send_at}</span>
+                {show && 
                     
-                    </>
-                ))}
-                <div ref={divRef}/>
-            </div>  
-            
-            <div className={styles.containerinput}>
+                        <div className={styles.div}>
+                            <button className={styles.btndiv} onClick={vaciar}>
+                                <CircleMinus />
+                                Vaciar chat
+                            </button>
+                        </div>
+                    
+                }
+            </div>
+            <ChatList list={messages} user={user}/>
+            <form className={styles.containerinput} onSubmit={enviar}> 
                 <input type="text" value={message} placeholder="Escribe un mensaje...." onChange={(e) =>  setMessage(e.target.value)}/>
-                <button className={styles.btnsend} onClick={enviar}>
+                <button className={styles.btnsend}>
                     <SendHorizonalIcon  className={styles.icon}/>
                 </button>
-            </div>
+            </form>
         </section>
     )
 }
